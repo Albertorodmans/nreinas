@@ -1,4 +1,124 @@
 Documentación de la API para consumo 
-
+SWAGGER en el siguiente link
 ** http://127.0.0.1:8000/docs ***
 
+# NReinas
+
+Archivo .env necesario para realizar la conexion con la base de datos
+
+EXAMPLE
+DATABASE_URL="postgresql://root:Cbg9Xay9xtN@localhost:5433/nreinas"
+
+se puede colocar la conexion directamente en el archivo database.py en la linea 38
+
+engine = create_engine(os.getenv("DATABASE_URL")) y/o
+engine = create_engine("postgresql://root:Cbg9Xay9xtN@127.0.0.1:5433/nreinas")
+
+
+
+## Branches description
+
+* `sit` System integration Testing: This branch is used for system integration testing, which involves testing the interactions between different components or systems. This branch is typically used to test the functionality and compatibility of new changes before they are deployed to the production environment.
+
+* `uat` System Acceptance Testing: This branch is used for system acceptance testing, which involves testing the system from the perspective of the end-users. This branch is typically used to test the functionality and usability of new changes before they are deployed to the production environment.
+
+* `prod` Production: This is the main branch used for production releases. It contains the most stable and tested version of the code, and is typically used to deploy new features and changes to the live production environment. It is important that any changes that are merged into this branch have undergone rigorous testing and review before being deployed to production.
+
+### LOCAL SETUP
+```
+git config --global --add url."git@github.com:".insteadOf "https://github.com/"
+```
+
+### Deploy
+
+Cambiar version en los [workflows] de github que se encuentran en la carpeta [.github] y en los archivos .yml que se encuentran
+en la raiz del proyecto debe de ser del mismo ambiente 
+
+Ejemplo:
+para uat cambiar
+
+VERSION: "v0.4.15" en [uat.yml]
+
+image: albertorodmans/nreinas:v0.4.15-uat en [docker-compose.uat.yml]
+
+nota:  se aumenta la version siguiendo el standard de https://semver.org/
+
+Se realiza el push con los cambios a realizar y los cambios antes mencionados anteriormente.
+
+
+#### Variables de entorno 
+
+Si se requiere modificar alguna variable de entorno se tendrá que hacer desde 
+https://github.com/Albertorodmans/nreinas/settings/environments dependiendo del ambiente de que se quiera modificar
+
+
+
+## Outro
+
+### logs
+
+para los  ambientes se debera entrar al servidor y ejecutar 
+
+```
+docker logs -f --since 2023-05-31 nreinas
+```
+### Directorio
+
+#### .github 
+se encuentran todos los archivos .yml para los github actions dividido por ambiente
+
+#### app.py
+
+Aqui se encuentran todos los endpoints que en este caso es el de resolver
+
+http://127.0.0.1:8000/resolver
+method: POST
+body: {
+    "n": número de reinas (ejemplo : 8), #variable de tipo INT
+}
+
+
+Colección de postman
+
+
+{
+	"info": {
+		"_postman_id": "dd912617-a4bd-44ee-bb0a-a6fe51609d2b",
+		"name": "nreinas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9112085"
+	},
+	"item": [
+		{
+			"name": "nreinas",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"n\":1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/resolver",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"solve"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
