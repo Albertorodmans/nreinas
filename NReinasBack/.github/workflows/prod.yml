@@ -1,0 +1,55 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+name: deploy production
+env:
+  VERSION: "v0.0.1"
+  ENV: "prod"
+jobs:
+  build:
+    name: build to image
+    runs-on: [ self-hosted,prod,nreinas  ]
+    environment: prod
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: 'Create env file'
+        run: |
+          touch .env.prod
+          echo DATABASE_URL=${{ secrets.DATABASE_URL }} >> .env.prod
+          cat .env.prod
+
+      - name: build and push to docker
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          secret-files: |
+            MY_SECRET=./.env.${{ env.ENV }}
+          build-args: |
+            TOKEN=${{ secrets.TOKEN_GITHUB }}
+            ENV=prod
+            USER=${{ secrets.USER }}
+            DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          tags:  albertorodmans/nreinas:${{ env.VERSION }}-${{ env.ENV }}
+
+      - name: make file
+        run: make prod

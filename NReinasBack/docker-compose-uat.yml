@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  db-nreinas:
+    container_name: db-nreinas
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: nreinas
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: ${DATABASE_URL}
+    volumes: 
+      - db-nreinas:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - nreinas-ntw
+
+  nreinas:
+    restart: always
+    container_name: nreinas
+    image: nreinas:v0.0.1-uat
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db-nreinas
+    networks:
+      - nreinas-ntw
+volumes:
+  db-nreinas:
+    driver: local
+networks:
+  nreinas-ntw:
+    external: true
