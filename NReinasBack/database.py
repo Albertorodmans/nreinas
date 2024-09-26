@@ -35,7 +35,7 @@ def check_solution(nreinas):
     
     
 def conection():
-    engine = create_engine("postgresql://root:Cbg9Xay9xtN@127.0.0.1:5433/nreinas")
+    engine = create_engine(os.getenv("DATABASE_URL"))
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
