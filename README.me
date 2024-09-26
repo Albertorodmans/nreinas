@@ -1,4 +1,8 @@
 Documentación de la API para consumo  BACKEND
+
+El código lo pense de tal forma que en cada procesamiento de soluciones se guardara en la base, si la 
+consulta ya fue procesada está no volvera a procesar la solución si no que arrojara directamente la solución ya guardada, agilizando los resultados mostrados.
+
 SWAGGER en el siguiente link
 ** http://127.0.0.1:8000/docs ***
 
@@ -122,6 +126,18 @@ Colección de postman
 		}
 	]
 }
+
+TEST backend 
+
+** Para correr las pruebas programadas es necesario instalar pytest con el siguiente comando
+
+pip3 install pytest
+
+posteriortemente nos situamos en la raix de la carpeta de NReinasBack y corremos el comando 
+
+pytest
+
+este nos arrojara las validacions que hemos programado en este caso solo probe hasta 14 reinas ya que cada salto proboca más tiempo de procesamiento.
 
 
 Documentación FrontEnd
