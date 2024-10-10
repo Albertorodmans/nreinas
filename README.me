@@ -3,15 +3,12 @@ Documentación de la API para consumo  BACKEND
 El código lo pense de tal forma que en cada procesamiento de soluciones se guardara en la base, si la 
 consulta ya fue procesada está no volvera a procesar la solución si no que arrojara directamente la solución ya guardada, agilizando los resultados mostrados.
 app/: Contiene la lógica principal de la aplicación.
-
 	api/: Define las rutas y endpoints de la API.
 	models/: Contiene los modelos de datos.
-	schemas/: Define los esquemas para la validación de datos.
-	services/: Contiene la lógica de negocio y servicios.
-	db/: Configuración y modelos de la base de datos.
-	utils/: Funciones utilitarias que pueden ser usadas en varias partes del proyecto.
-tests/: Contiene las pruebas unitarias y de integración.
-
+	schemas/: Define los esquemas para la validación de datos, en este caso no se usan.
+	endpoints/: Contiene la lógica de negocio y servicios.
+	database/: Configuración y modelos de la base de datos.
+test/: Contiene las pruebas unitarias y de integración.
 requirements.txt: Lista de dependencias del proyecto.
 Dockerfile: Es un archivo de texto que contiene una serie de instrucciones que Docker utiliza para construir una imagen
 docker-compose-###.yml: Se utiliza para definir y gestionar aplicaciones que utilizan múltiples contenedores Docker.
