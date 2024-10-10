@@ -1,0 +1,16 @@
+#archivos de variables de entorno
+.env.*
+.env
+# Python
+__pycache__/
+env/
+venv/
+venv.bak/
+
+# Archivos de configuración de IDE
+.vscode/
+*.code-workspace
+# Otros archivos temporales
+.DS_Store
+
+.pytest_cache/

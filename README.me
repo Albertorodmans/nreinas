@@ -2,7 +2,43 @@ Documentación de la API para consumo  BACKEND
 
 El código lo pense de tal forma que en cada procesamiento de soluciones se guardara en la base, si la 
 consulta ya fue procesada está no volvera a procesar la solución si no que arrojara directamente la solución ya guardada, agilizando los resultados mostrados.
+app/: Contiene la lógica principal de la aplicación.
 
+	api/: Define las rutas y endpoints de la API.
+	models/: Contiene los modelos de datos.
+	schemas/: Define los esquemas para la validación de datos.
+	services/: Contiene la lógica de negocio y servicios.
+	db/: Configuración y modelos de la base de datos.
+	utils/: Funciones utilitarias que pueden ser usadas en varias partes del proyecto.
+tests/: Contiene las pruebas unitarias y de integración.
+
+requirements.txt: Lista de dependencias del proyecto.
+Dockerfile: Es un archivo de texto que contiene una serie de instrucciones que Docker utiliza para construir una imagen
+docker-compose-###.yml: Se utiliza para definir y gestionar aplicaciones que utilizan múltiples contenedores Docker.
+.travis.yml: Servicio alojado de integración continua (CI) utilizado para desarrollar y probar (test) proyectos de software alojados en GitHub.
+Makefile: Reglas para ejecutar docker compose
+
+.gitignore: Archivos y directorios que deben ser ignorados por Git.
+
+README.md: Documentación del proyecto.
+
+
+CONSTRUCCIÓN DEL PROYECTO con Docker
+
+Para realizar la construcción del proyecto se deberá instalar make para ejecutar la instruccion dentro del archivo Makefile
+
+linux
+instalar make : npm intall make
+
+posteriormente ejecutamos el comando 
+
+make <"etiqueta dentro del archivo Makefile"> --> por ejemplo ejecutamos la instrucción 
+
+make sit  --> y se ejecutará la instrucción con esta etiqueta dentro del archivo Makefile 
+
+
+
+Documentación de la API para consumo 
 SWAGGER en el siguiente link
 ** http://127.0.0.1:8000/docs ***
 
@@ -56,9 +92,6 @@ Si se requiere modificar alguna variable de entorno se tendrá que hacer desde
 https://github.com/Albertorodmans/nreinas/settings/environments dependiendo del ambiente de que se quiera modificar
 
 
-
-## Outro
-
 ### logs
 
 para los  ambientes se debera entrar al servidor y ejecutar 
@@ -75,7 +108,7 @@ se encuentran todos los archivos .yml para los github actions dividido por ambie
 
 Aqui se encuentran todos los endpoints que en este caso es el de resolver
 
-http://127.0.0.1:8000/resolver
+http://127.0.0.1:8000/resolver/numreinas
 method: POST
 body: {
     "n": número de reinas (ejemplo : 8), #variable de tipo INT
@@ -108,7 +141,7 @@ Colección de postman
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/resolver",
+					"raw": "http://127.0.0.1:8000/resolver/numreinas",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -126,6 +159,7 @@ Colección de postman
 		}
 	]
 }
+
 
 TEST backend 
 

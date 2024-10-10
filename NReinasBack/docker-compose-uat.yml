@@ -1,35 +1,31 @@
-version: '3.8'
+version: '3.8' #Especifica la versión de Docker Compose que estás utilizando.
 
 services:
-  db-nreinas:
+  db-nreinas: #Contenedor para la base de datos
     container_name: db-nreinas
     image: postgres:latest
-    environment:
+    restart: always #Especifica que el contenedor debe reiniciarse automáticamente si se detiene.
+    environment: #Establece variables de entorno que la aplicación puede utilizar.
       POSTGRES_DB: nreinas
       POSTGRES_USER: root
       POSTGRES_PASSWORD: ${DATABASE_URL}
-    volumes: 
+    volumes:  #Monta el directorio actual en el contenedor para facilitar el desarrollo.
       - db-nreinas:/var/lib/postgresql/data
     ports:
       - "5433:5432"
-    networks:
-      - nreinas-ntw
 
-  nreinas:
-    restart: always
+  nreinas: #Contenedor para la aplicación FastAPI Backend
+    restart: always #Especifica que el contenedor debe reiniciarse automáticamente si se detiene.
     container_name: nreinas
     image: nreinas:v0.0.1-uat
     build:
-      context: .
-    ports:
+      context: . #Indica que debe construir la imagen a partir del Dockerfile en el directorio actual.
+    ports: #Mapea el puerto 8000 del contenedor al puerto 8000 del host.
       - "8000:8000"
-    depends_on:
+    depends_on: #Indica que este servicio depende de otro (en este caso, de la base de datos).
       - db-nreinas
-    networks:
-      - nreinas-ntw
-volumes:
+    
+volumes: #Define volúmenes que se utilizarán para la persistencia de datos.
   db-nreinas:
     driver: local
-networks:
-  nreinas-ntw:
-    external: true
+
